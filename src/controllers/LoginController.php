@@ -22,6 +22,8 @@ class LoginController extends Controller {
         $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
         $password = filter_input(INPUT_POST, 'password');
 
+
+
         if ($email && $password) {
             $token = LoginHandler::verifyLogin($email, $password);
 
@@ -39,7 +41,7 @@ class LoginController extends Controller {
     }
 
     public function signup() {
-         $flash = '';
+        $flash = '';
         if (!empty($_SESSION['flash'])) {
             $flash = $_SESSION['flash'];
             $_SESSION['flash'] = '';
@@ -72,9 +74,9 @@ class LoginController extends Controller {
             } // fim strtotime
 
             if (LoginHandler::emailExists($email) === false) {
-               
-                $token = LoginHandler::addUser($name, $email, $password, $birthdate);
-                
+
+                $token = LoginHandler::addUser($email, $password, $name, $birthdate);
+
                 $_SESSION['token'] = $token;
                 $this->redirect('/');
             } else {
@@ -85,7 +87,9 @@ class LoginController extends Controller {
             $_SESSION['flash'] = 'Preencha todos os campos';
             $this->redirect('/cadastro');
         } // fim do if name email password birthdate
-    } // fim da função signupAction
+    }
+
+// fim da função signupAction
 }
 
 // fim class

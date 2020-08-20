@@ -1,5 +1,6 @@
 <?php
 header('Content-Type: text/html; charset=utf-8');
+session_destroy();
 ?>
 <!DOCTYPE html>
 <html>
@@ -23,8 +24,7 @@ header('Content-Type: text/html; charset=utf-8');
                 <input placeholder="Digite seu e-mail" class="input" type="email" name="email" />
 
                 <input placeholder="Digite sua senha" class="input" type="password" name="password" />
-                <input type="hidden" name="token" value ="2b0cb1614fc3ce3847a1a434dea4687a" />
-
+                <!-- input type="hidden" name="password" value="d65298dfc2528c566c8a3c468b4407ec" / -->
                 <input class="button" type="submit" value="Acessar o sistema" />
 
                 <a href="<?= $base; ?>/cadastro">Ainda não tem conta? Cadastre-se</a>

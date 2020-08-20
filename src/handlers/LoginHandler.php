@@ -8,32 +8,47 @@ class LoginHandler {
 
     public static function checkLogin() {
 
-        $_SESSION['token'] = '2b0cb1614fc3ce3847a1a434dea4687a';
-        
-      if (!empty($_SESSION['token'])) {
+       
+        if (!empty($_SESSION['token'])) {
 
+                 
             $token = $_SESSION['token'];
-           
+
 
             $data = User::select()->where('token', $token)->one();
 
+                   
+                        
+            
             if (count($data) > 0) {
 
                 $loggedUser = new User();
                 $loggedUser->id = $data['id'];
                 $loggedUser->email = $data['email'];
                 $loggedUser->name = $data['name'];
+                $loggedUser->avatar = $data['avatar'];
+                $loggedUser->cover = $data['cover'];
+                
+            return $loggedUser;
+     
+                
             }
         } return false;
     }
 
-    public static function verifyLogin($email, $senha) {
+    public static function verifyLogin($email, $password) {
         $user = User::select()->where('email', $email)->one();
+        // $password = md5($email . $password);
 
         if ($user) {
+
+
+
+             if (!password_verify($password, $user['password'])) { echo "Senha não confere";
+             }
             if (password_verify($password, $user['password'])) {
                 $token = md5(time() . rand(0, 9999) . time());
-
+               
                 User::update()
                         ->set('token', $token)
                         ->where('email', $email)
@@ -50,14 +65,15 @@ class LoginHandler {
         return $user ? true : false;
     }
 
-    public function addUser($name, $email, $password, $birthdate) {
-        $hash = md5($email . $password);
+    public function addUser($email, $password, $name, $birthdate) {
+        $hash = password_hash($password, PASSWORD_DEFAULT);
         $token = md5(time() . rand(0, 9999) . time());
 
 
         User::insert([
             'email' => $email,
             'password' => $hash,
+            'name' => $name,
             'birthdate' => $birthdate,
             'token' => $token
         ])->execute();
