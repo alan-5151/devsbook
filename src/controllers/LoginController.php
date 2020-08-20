@@ -39,12 +39,12 @@ class LoginController extends Controller {
     }
 
     public function signup() {
-        $flash = '';
+         $flash = '';
         if (!empty($_SESSION['flash'])) {
             $flash = $_SESSION['flash'];
             $_SESSION['flash'] = '';
         }
-        $this->render('/signup', [
+        $this->render('signup', [
             'flash' => $flash
         ]);
     }
@@ -72,7 +72,9 @@ class LoginController extends Controller {
             } // fim strtotime
 
             if (LoginHandler::emailExists($email) === false) {
+               
                 $token = LoginHandler::addUser($name, $email, $password, $birthdate);
+                
                 $_SESSION['token'] = $token;
                 $this->redirect('/');
             } else {
@@ -80,12 +82,10 @@ class LoginController extends Controller {
                 $this->redirect('/cadastro');
             }
         } else {
-             $_SESSION['flash'] = 'Preencha todos os campos';
+            $_SESSION['flash'] = 'Preencha todos os campos';
             $this->redirect('/cadastro');
         } // fim do if name email password birthdate
-    }
-
-// fim da função signupAction
+    } // fim da função signupAction
 }
 
 // fim class

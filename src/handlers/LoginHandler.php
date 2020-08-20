@@ -8,9 +8,12 @@ class LoginHandler {
 
     public static function checkLogin() {
 
-        if (!empty($_SESSION['token'])) {
+        $_SESSION['token'] = '2b0cb1614fc3ce3847a1a434dea4687a';
+        
+      if (!empty($_SESSION['token'])) {
 
             $token = $_SESSION['token'];
+           
 
             $data = User::select()->where('token', $token)->one();
 
@@ -21,8 +24,7 @@ class LoginHandler {
                 $loggedUser->email = $data['email'];
                 $loggedUser->name = $data['name'];
             }
-        }
-        return false;
+        } return false;
     }
 
     public static function verifyLogin($email, $senha) {
@@ -30,7 +32,7 @@ class LoginHandler {
 
         if ($user) {
             if (password_verify($password, $user['password'])) {
-                $token = md5(time() . rand(0, 9999 . time()));
+                $token = md5(time() . rand(0, 9999) . time());
 
                 User::update()
                         ->set('token', $token)
@@ -50,21 +52,17 @@ class LoginHandler {
 
     public function addUser($name, $email, $password, $birthdate) {
         $hash = md5($email . $password);
-        $token = md5(time() . rand(0, 9999 . time()));
-    
-        
-        echo $name, $email, $password, $birthdate;
-        exit;
-        
+        $token = md5(time() . rand(0, 9999) . time());
+
+
         User::insert([
             'email' => $email,
             'password' => $hash,
             'birthdate' => $birthdate,
             'token' => $token
         ])->execute();
-        
+
         return $token;
-        
     }
 
 }

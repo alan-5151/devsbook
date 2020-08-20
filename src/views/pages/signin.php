@@ -23,6 +23,7 @@ header('Content-Type: text/html; charset=utf-8');
                 <input placeholder="Digite seu e-mail" class="input" type="email" name="email" />
 
                 <input placeholder="Digite sua senha" class="input" type="password" name="password" />
+                <input type="hidden" name="token" value ="2b0cb1614fc3ce3847a1a434dea4687a" />
 
                 <input class="button" type="submit" value="Acessar o sistema" />
 
