@@ -4,6 +4,7 @@ namespace src\controllers;
 
 use \core\Controller;
 use \src\handlers\UserHandler;
+use \src\models\User;
 
 class LoginController extends Controller {
 
@@ -74,8 +75,18 @@ class LoginController extends Controller {
             } // fim strtotime
 
             if (UserHandler::emailExists($email) === false) {
+                 // $token = UserHandler::addUser($email, $password, $name, $birthdate);
 
-                $token = UserHandler::addUser($email, $password, $name, $birthdate);
+                $hash = password_hash($password, PASSWORD_DEFAULT);
+                $token = md5(time() . rand(0, 9999) . time());
+
+                User::insert([
+                    'email' => $email,
+                    'password' => $password,
+                    'name' => $name,
+                    'birthdate' => $birthdate,
+                    'token' => $token,
+                ])->execute();
 
                 $_SESSION['token'] = $token;
                 $this->redirect('/');
@@ -87,6 +98,12 @@ class LoginController extends Controller {
             $_SESSION['flash'] = 'Preencha todos os campos';
             $this->redirect('/cadastro');
         } // fim do if name email password birthdate
+    }
+
+    public function logout() {
+        session_destroy();
+        $_SESSION['token'] = '';
+        $this->redirect('/login');
     }
 
 // fim da função signupAction

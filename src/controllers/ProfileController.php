@@ -19,14 +19,30 @@ class ProfileController extends Controller {
     }
 
     public function index($atts = []) {
-       $id = $this->loggedUser->id;
-        
-       if (!empty($atts['id'])) {
-           $id = $atts['id'];
-       }
-        
+         $page = intval(filter_input(INPUT_GET, 'page'));
+        $id = $this->loggedUser->id;
+
+        if (!empty($atts['id'])) {
+            $id = $atts['id'];
+        }
+
+        $user = UserHandler::getUser($id, true);
+
+        if (!$user) {
+
+            $this->redirect('/');
+        }
+
+        $feed = PostHandler::getUserFeed(
+                $id,
+                $page,
+                $this->loggedUser->id
+                );
+
         $this->render('profile', [
-            'loggedUser' => $this->loggedUser
+            'loggedUser' => $this->loggedUser,
+            'user' => $user,
+            'feed' => $feed
         ]);
     }
 

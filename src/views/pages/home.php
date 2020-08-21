@@ -1,6 +1,6 @@
 <?= $render('header', ['loggedUser' => $loggedUser]); ?>
 <section class="container main">
-    <?= $render('sidebar', ['activeMenu'=>'home']); ?>
+    <?= $render('sidebar', ['activeMenu' => 'home']); ?>
     <section class="feed mt-10">
 
         <div class="row">
@@ -20,11 +20,11 @@
 
                 <?php endforeach; ?>
                 <div class="feed-pagination">
-                <?php for ($q=0;$q<$feed['pageCount'];$q++): ?>
-                
-                <a class="<?=($q==$feed['currentPage']?'active':'') ?>" href="<?=$base;?>/?page=<?=$q;?>"><?=$q+1;?></a>
-                
-                <?php endfor;?>
+                    <?php for ($q = 0; $q < $feed['pageCount']; $q++): ?>
+
+                        <a class="<?= ($q == $feed['currentPage'] ? 'active' : '') ?>" href="<?= $base; ?>/?page=<?= $q; ?>"><?= $q + 1; ?></a>
+
+                    <?php endfor; ?>
                 </div>
             </div>
             <div class="column side pl-5">
