@@ -6,29 +6,28 @@ use \core\Controller;
 use \src\handlers\UserHandler;
 use \src\handlers\PostHandler;
 
-class PostController extends Controller {
+class ProfileController extends Controller {
 
     private $loggedUser;
 
     public function __construct() {
         $this->loggedUser = UserHandler::checkLogin();
         if ($this->loggedUser === false) {
+            session_destroy();
             $this->redirect('/login');
         }
     }
 
-    public function new() {
-        $body = filter_input(INPUT_POST, 'body');
-
-        if ($body) {
-            PostHandler::addPost(
-                    $this->loggedUser->id,
-                    'text',
-                    $body
-            );
-        }
-
-        $this->redirect('/');
+    public function index($atts = []) {
+       $id = $this->loggedUser->id;
+        
+       if (!empty($atts['id'])) {
+           $id = $atts['id'];
+       }
+        
+        $this->render('profile', [
+            'loggedUser' => $this->loggedUser
+        ]);
     }
 
 }
