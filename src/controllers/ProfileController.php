@@ -5,6 +5,7 @@ namespace src\controllers;
 use \core\Controller;
 use \src\handlers\UserHandler;
 use \src\handlers\PostHandler;
+use \src\models\UserRelation;
 
 class ProfileController extends Controller {
 
@@ -19,31 +20,56 @@ class ProfileController extends Controller {
     }
 
     public function index($atts = []) {
-         $page = intval(filter_input(INPUT_GET, 'page'));
-        $id = $this->loggedUser->id;
+        $page = intval(filter_input(INPUT_GET, 'page'));
 
+        // Detectando o usuário acessado (EU mesmo ou outro)
+        $id = $this->loggedUser->id;
         if (!empty($atts['id'])) {
             $id = $atts['id'];
         }
 
+        // Pegando informações do usuário
         $user = UserHandler::getUser($id, true);
-
         if (!$user) {
-
             $this->redirect('/');
         }
 
+        // Pegando o feed do usuário
         $feed = PostHandler::getUserFeed(
-                $id,
-                $page,
-                $this->loggedUser->id
-                );
+                        $id,
+                        $page,
+                        $this->loggedUser->id
+        );
+
+        // Verificar se EU sigo o usuário
+        $isFollowing = false;
+        if ($user->id != $this->loggedUser->id) {
+            $isFollowing = UserHandler::isFollowing($this->loggedUser->id, $user->id);
+        }
 
         $this->render('profile', [
             'loggedUser' => $this->loggedUser,
             'user' => $user,
-            'feed' => $feed
+            'feed' => $feed,
+            'isFollowing' => $isFollowing
         ]);
+    }
+
+    public function follow($atts) {
+        $to = intval($atts['id']);
+
+
+
+        if (UserHandler::idExists($to)) {
+            if (UserHandler::isFollowing($this->loggedUser->id, $to)) {
+                    UserHandler::unfollow($this->loggedUser->id, $to);
+                
+            } else {
+                UserHandler::follow($this->loggedUser->id, $to);
+               
+            }
+        }
+        $this->redirect('/perfil/' . $to);
     }
 
 }

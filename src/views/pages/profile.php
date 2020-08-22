@@ -24,6 +24,13 @@
 
                         </div>
                         <div class="profile-info-data row">
+                            <?php if ($user->id != $loggedUser->id): ?>
+                                <div class="profile-info-item m-width-20">
+                                    
+                                    <a href="<?=$base;?>/perfil/<?=$user->id;?>/follow" class="button"> <?=(!$isFollowing)?'Seguir':'Deixar de seguir';?> </a>
+                                   
+                                </div>
+                            <?php endif; ?>
                             <div class="profile-info-item m-width-20">
                                 <div class="profile-info-item-n"><?= count($user->followers); ?></div>
                                 <div class="profile-info-item-s">Seguidores</div>
@@ -88,12 +95,12 @@
                             <?php if (isset($user->following[$q])): ?>
 
                                 <div class="friend-icon">
-                                    <a href="<?= $base; ?>/perfil/<?= $followe->id; ?>">
+                                    <a href="<?= $base; ?>/perfil/<?= $user->following[$q]->id; ?>">
                                         <div class="friend-icon-avatar">
-                                            <img src="<?= $base; ?>/media/avatars/<?= $followe->avatar; ?>" />
+                                            <img src="<?= $base; ?>/media/avatars/<?= $user->following[$q]->avatar; ?>" />
                                         </div>
                                         <div class="friend-icon-name">
-                                            <?= $followe->name; ?>
+                                            <?= $user->following[$q]->name; ?>
                                         </div>
                                     </a>
                                 </div>
