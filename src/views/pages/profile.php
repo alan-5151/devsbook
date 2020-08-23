@@ -1,13 +1,13 @@
 <?= $render('header', ['loggedUser' => $loggedUser]); ?>
 <section class="container main">
 
-    <?= $render('sidebar', ['activeMenu' => 'profile', 'loggedUser'=>$loggedUser]); ?>
+    <?= $render('sidebar', ['activeMenu' => 'profile', 'loggedUser' => $loggedUser]); ?>
 
 
 
     <section class="feed">
 
-         <?=$render('perfil-header',['user'=>$user, 'loggedUser'=>$loggedUser, 'isFollowing'=>$isFollowing]);?>
+        <?= $render('perfil-header', ['user' => $user, 'loggedUser' => $loggedUser, 'isFollowing' => $isFollowing]); ?>
 
         <div class="row">
 
@@ -45,7 +45,7 @@
                             <span>( <?= count($user->following); ?> )</span>
                         </div>
                         <div class="box-header-buttons">
-                            <a href="<?=$base;?>/perfil/<?=$user->id;?>/amigos">ver todos</a>
+                            <a href="<?= $base; ?>/perfil/<?= $user->id; ?>/amigos">ver todos</a>
                         </div>
                     </div>
                     <div class="box-body friend-list">
@@ -82,7 +82,7 @@
                             <span>( <?= count($user->photos); ?> ) </span>
                         </div>
                         <div class="box-header-buttons">
-                            <a href="<?=$base;?>/perfil/<?=$user->id;?>/fotos">ver todos</a>
+                            <a href="<?= $base; ?>/perfil/<?= $user->id; ?>/fotos">ver todos</a>
                         </div>
                     </div>
                     <div class="box-body row m-20">
@@ -140,9 +140,6 @@
         </div>
 
     </section>
-
-
-
 
 </section>
 <?= $render('footer') ?>

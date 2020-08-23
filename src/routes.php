@@ -24,6 +24,10 @@ $router->get('/fotos', 'ProfileController@photos');
 
 $router->get('/pesquisa', 'SearchController@index');
 
+$router->get('/config', 'ConfigController@settings');
+$router->post('/config', 'ConfigController@settingsAction');
+
+
 $router->get('/sair', 'LoginController@logout');
 
 //router->get('/pesquisar');
