@@ -1,0 +1,41 @@
+
+
+followers
+
+
+ <?php foreach ($user->followers AS $follower): ?>
+                                        
+                                        <div class="friend-icon">
+                                            <a href="/perfil/<?=$follower->id;?>">
+                                                <div class="friend-icon-avatar">
+                                                    <img src="<?=$base;?>/media/avatars/<?=$follower->avatar;?>" />
+                                                </div>
+                                                <div class="friend-icon-name">
+                                                    <?=$follower->name;?>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        
+                                        <?php endforeach; ?>
+                                          
+#########################
+
+
+
+following
+
+
+<?php foreach ($user->following AS $follower): ?>
+                                        
+                                        <div class="friend-icon">
+                                            <a href="/perfil/<?=$follower->id;?>">
+                                                <div class="friend-icon-avatar">
+                                                    <img src="<?=$base;?>/media/avatars/<?=$follower->avatar;?>" />
+                                                </div>
+                                                <div class="friend-icon-name">
+                                                    <?=$follower->name;?>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        
+                                        <?php endforeach; ?>
