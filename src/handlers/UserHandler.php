@@ -34,7 +34,6 @@ class UserHandler {
 
     public static function verifyLogin($email, $password) {
         $user = User::select()->where('email', $email)->one();
-        // $password = md5($email . $password);
 
         if ($user) {
 
@@ -60,6 +59,26 @@ class UserHandler {
     public function emailExists($email) {
         $user = User::select()->where('email', $email)->one();
         return $user ? true : false;
+    }
+
+    public static function limpaAvatar($id) {
+        $data = User::select()->where('id', $id)->one();
+
+        if ($data) {
+            $user = new User();
+            $user->avatar = $data['avatar'];
+                    }
+       return $oldAvatar = $user->avatar;
+    }
+
+    public static function limpaCover($id) {
+        $data = User::select()->where('id', $id)->one();
+
+        if ($data) {
+            $user = new User();
+            $user->cover = $data['cover'];
+        }
+        return $user->cover;
     }
 
     public function getUser($id, $full = false) {
@@ -171,7 +190,7 @@ class UserHandler {
     public static function searchUser($term) {
         $users = [];
         $data = User::select()->where('name', 'like', '%' . $term . '%')->get();
-                
+
         if ($data) {
             foreach ($data AS $user) {
                 $newUser = new User();
@@ -186,4 +205,37 @@ class UserHandler {
         return $users;
     }
 
-} // fim da classe
+    // config
+
+
+    public static function updateUser($id, $new_name, $new_email, $new_birthdate, $new_city, $new_work, $new_avatar, $new_cover) {
+        $user = User::select()->where('id', $id)->one();
+
+        if ($user) {
+            User::update()
+                    ->set('name', $new_name)
+                    ->set('email', $new_email)
+                    ->set('birthdate', $new_birthdate)
+                    ->set('city', $new_city)
+                    ->set('work', $new_work)
+                    ->set('avatar', $new_avatar)
+                    ->set('cover', $new_cover)
+                    ->where('id', $id)
+                    ->execute();
+        }
+    }
+
+    public static function updatePassword($id, $password) {
+        $user = User::select()->where('id', $id)->one();
+        $hash = password_hash($password, PASSWORD_DEFAULT);
+        if ($hash) {
+            User::update()
+                    ->set('password', $hash)
+                    ->where('id', $id)
+                    ->execute();
+        }
+    }
+
+}
+
+// fim da classe

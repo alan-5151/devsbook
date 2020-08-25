@@ -1,12 +1,15 @@
 <aside class="mt-10">
 
-
-
+    <?php
+    $name = $loggedUser->name;
+    $name = explode(' ', $loggedUser->name);
+    $name = $name[0];
+    ?>
     <a href="#" class="user-area">
         <div class="user-area-icon">
             <img src="<?= $base; ?>/media/avatars/<?= $loggedUser->avatar; ?>" />
         </div>
-        <div class="profile-info-name" style="text-decoration: none; color: #000;"><?= $loggedUser->name; ?></div>
+        <div class="profile-info-name" style="text-decoration: none; color: #000;"><?= $name; ?></div>
     </a>
     <div class="menu-splitter"></div>
     <nav>

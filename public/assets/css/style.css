@@ -431,6 +431,48 @@ header .head-side {
 }
 
 
+.cform input, select {
+                width: 100%;
+                padding: 12px 20px;
+                margin: 8px 0;
+                display: inline-block;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                box-sizing: border-box;
+                font-size: 15px;
+                font-weight: bold;
+                color: #000;
+            }
+
+            .cform input[type=submit] {
+                width: 100%;
+                background-color: #4a76a8;
+                color: white;
+                padding: 14px 20px;
+                margin: 8px 0;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+
+            .cform input[type=submit]:hover {
+                background-color: #224b7a;
+            }
+
+            .cform div {
+                border-radius: 5px;
+                background-color: #f2f2f2;
+                padding: 10px;
+            }
+            .flash {
+                border: 2px solid #f00;
+                font-size: 16px;
+                font-weight: bold;
+                padding: 10px;
+                margin-top: 20px;
+            }
+
+
 @media (max-width: 992px) {
     header .head-side-right {
         display:none !important;
