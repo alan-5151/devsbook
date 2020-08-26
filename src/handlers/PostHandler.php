@@ -57,7 +57,7 @@ class PostHandler {
             //TODO: 4.2 preencher informações de COMMENTS
             $newPost->comments = PostComment::select()->where('id_post', $postItem['id'])->get();
             foreach ($newPost->comments AS $key => $comment) {
-                $newPost->comment[$key]['user'] = User::select()->where('id', $comment['id_user'])->one();
+                $newPost->comments[$key]['user'] = User::select()->where('id', $comment['id_user'])->one();
             }
             $posts[] = $newPost;
         }
@@ -89,6 +89,15 @@ class PostHandler {
             'id_post' => $id,
             'id_user' => $loggedUserId,
             'created_at' => date('Y-m-d H:i:s')
+        ])->execute();
+    }
+
+    public static function addComment($id, $txt, $loggedUserId) {
+        PostComment::insert([
+            'id_post' => $id,
+            'id_user' => $loggedUserId,
+            'created_at' => date('Y-m-d H:i:s'),
+            'body' => $txt
         ])->execute();
     }
 

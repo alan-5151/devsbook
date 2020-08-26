@@ -200,7 +200,7 @@ class ConfigController extends Controller {
                 $image = imagecreatefromjpeg($file['tmp_name']);
                 break;
             case 'image/png':
-                $image = imagecreatefromjpng($file['tmp_name']);
+                $image = imagecreatefrompng($file['tmp_name']);
                 break;
         }
         imagecopyresampled($finalImage, $image, $x, $y, 0, 0, $newWidth, $newHeight, $widthOrig, $heightOrig);

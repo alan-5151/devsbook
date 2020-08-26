@@ -82,7 +82,7 @@ class LoginController extends Controller {
 
                 User::insert([
                     'email' => $email,
-                    'password' => $password,
+                    'password' => $hash,
                     'name' => $name,
                     'birthdate' => $birthdate,
                     'token' => $token,
