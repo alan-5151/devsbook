@@ -49,47 +49,41 @@ class PostHandler {
 
             //TODO: 4.1 preencher informações de LIKE
             $likes = PostLike::select()->where('id_post', $postItem['id'])->get();
-            
+
             $newPost->likeCount = count($likes);
             $newPost->liked = self::isLiked($postItem['id'], $loggedUserId);
-            
+
 
             //TODO: 4.2 preencher informações de COMMENTS
             $newPost->comments = PostComment::select()->where('id_post', $postItem['id'])->get();
             foreach ($newPost->comments AS $key => $comment) {
                 $newPost->comment[$key]['user'] = User::select()->where('id', $comment['id_user'])->one();
-                
             }
             $posts[] = $newPost;
-            
-           
-            
         }
 
         return $posts;
     }
-   
-    
-    
-     public static function isLiked($id, $loggedUserId) {
+
+    public static function isLiked($id, $loggedUserId) {
         $mylike = PostLike::select()
                 ->where('id_post', $id)
                 ->where('id_user', $loggedUserId)
                 ->get();
-      
+
         if (count($mylike) > 0) {
             return true;
         } else
             return false;
     }
-    
-    
+
     public static function deleteLike($id, $loggedUserId) {
         PostLike::delete()
                 ->where('id_post', $id)
                 ->where('id_user', $loggedUserId)
                 ->execute();
     }
+
     public static function addLike($id, $loggedUserId) {
         PostLike::insert([
             'id_post' => $id,
@@ -97,14 +91,7 @@ class PostHandler {
             'created_at' => date('Y-m-d H:i:s')
         ])->execute();
     }
-    
-    
-    
-    
-    
-    
-    
-    
+
     public static function getUserFeed($idUser, $page, $loggedUserId) {
         $perPage = 2;
 
