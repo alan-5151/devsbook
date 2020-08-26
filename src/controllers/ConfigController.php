@@ -152,10 +152,7 @@ class ConfigController extends Controller {
             }
         }
 
-
-
-
-
+        // Update - alterar dados enviados pelo form.
         UserHandler::updateUser($id, $new_name, $new_email, $new_birthdate, $new_city, $new_work, $new_avatar, $new_cover);
         if (($password != '') && ($password === $new_password)) {
             UserHandler::updatepassword($id, $password);
